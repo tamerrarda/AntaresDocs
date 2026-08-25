@@ -1,0 +1,480 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-ddokiihg"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Contract surface | Antares</title><link rel="canonical" href="https://tamerrarda.github.io/AntaresDocs/reference/contract-surface/"/><link rel="sitemap" href="/AntaresDocs/sitemap-index.xml"/><link rel="icon" href="/antares-mark-48.webp" type="image/webp"/><link rel="apple-touch-icon" href="/antares-mark-192.webp"/><link rel="shortcut icon" href="/AntaresDocs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.2.4"/><meta name="generator" content="Starlight v0.41.8"/><meta property="og:title" content="Contract surface"/><meta property="og:type" content="article"/><meta property="og:url" content="https://tamerrarda.github.io/AntaresDocs/reference/contract-surface/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><meta property="og:site_name" content="Antares"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/AntaresDocs/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/AntaresDocs/_astro/common.CY6E1EKB.css"><script type="module" src="/AntaresDocs/_astro/page.BBe2jelq.js"></script></head><body class="astro-ddokiihg"><a class="sl-skip-link astro-j4noll2n" href="#_top">Skip to content</a><div class="page sl-flex astro-mcy6wt2x"><header class="header astro-mcy6wt2x"><div class="header astro-axdl6znk"><div class="title-wrapper sl-flex astro-axdl6znk"><a href="/AntaresDocs/" class="site-title sl-flex astro-3oiknwzh"><img class="astro-3oiknwzh" alt="Antares" src="/AntaresDocs/_astro/antares-mark-48.DF1IdnAQ.webp" width="48" height="55"><span class="astro-3oiknwzh" translate="no">Antares</span></a></div><div class="sl-flex print:hidden astro-axdl6znk"><site-search class="astro-axdl6znk astro-yb6hr64j" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-yb6hr64j"><svg aria-hidden="true" class="astro-yb6hr64j astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-yb6hr64j" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-yb6hr64j" style="display: none;"><kbd class="astro-yb6hr64j">Ctrl</kbd><kbd class="astro-yb6hr64j">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-yb6hr64j"><div class="dialog-frame sl-flex astro-yb6hr64j"><button data-close-modal class="sl-flex md:sl-hidden astro-yb6hr64j">Cancel</button><div class="search-container astro-yb6hr64j"><div id="starlight__search" class="astro-yb6hr64j"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/AntaresDocs/_astro/Search.astro_astro_type_script_index_0_lang.DDCxZFw4.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-axdl6znk"><div class="sl-flex social-icons astro-axdl6znk"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-mcy6wt2x" aria-label="Main"><starlight-menu-button class="print:hidden astro-v6ipcuxz"><button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-v6ipcuxz"><svg aria-hidden="true" class="open-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg></button></starlight-menu-button><script type="module">var e=class extends HTMLElement{btn=this.querySelector(`button`);constructor(){super(),this.btn.addEventListener(`click`,()=>this.toggleExpanded());let e=this.closest(`nav`);e&&e.addEventListener(`keyup`,e=>this.closeOnEscape(e)),matchMedia(`(min-width: 50em)`).addEventListener(`change`,()=>this.setExpanded(!1))}setExpanded(e){this.setAttribute(`aria-expanded`,String(e)),document.body.toggleAttribute(`data-mobile-menu-expanded`,e),document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}toggleExpanded(){this.setExpanded(this.getAttribute(`aria-expanded`)!==`true`)}closeOnEscape(e){e.code===`Escape`&&(this.setExpanded(!1),this.btn.focus())}};customElements.define(`starlight-menu-button`,e);</script><div id="starlight__sidebar" class="sidebar-pane astro-mcy6wt2x"><div class="sidebar-content sl-flex astro-mcy6wt2x"><sl-sidebar-state-persist data-hash="1el75l8" class="astro-wqf42o3a"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-ikqq2z2l"><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Start here</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Antares</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/covered-call/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What a covered call is</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/why-antares/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Why this exists</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/status/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Where this stands</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">How it works</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-lifecycle/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">One round, end to end</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/auction/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How the premium is discovered</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/settlement/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How a round is settled</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-outcomes/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The four ways a round ends</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/price-feed/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The price feed</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Depositors</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/depositing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Depositing</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/withdrawing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Getting your money out</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/what-you-give-up/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you give up</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Counterparties</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/what-you-are-buying/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you are buying</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/bidding-and-payout/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Bidding, and getting paid</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/pricing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Pricing it yourself</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Trust and risk</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/trust-model/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Who can do what to your funds</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/invariants/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The properties that must always hold</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/risks/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Risks, stated plainly</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/incidents/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">If something breaks</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Reference</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/deployment/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What is deployed</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/contract-surface/" aria-current="page" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Contract surface</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/glossary/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Glossary</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/security/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Reporting a vulnerability</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-rhmlmlok"><div class="social-icons astro-rhmlmlok"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></div></nav><div class="main-frame astro-mcy6wt2x"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-7bq7y7x2"><aside class="right-sidebar-container print:hidden astro-7bq7y7x2"><div class="right-sidebar astro-7bq7y7x2"><div class="lg:sl-hidden astro-nkmraz2k"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-hx74dxpp"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-hx74dxpp"><details id="starlight__mobile-toc" class="astro-hx74dxpp"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-hx74dxpp"><span class="toggle sl-flex astro-hx74dxpp">On this page<svg aria-hidden="true" class="caret astro-hx74dxpp astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-hx74dxpp"></span></summary><div class="dropdown astro-hx74dxpp"><ul class="isMobile astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#standards" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Standards</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#lifecycle" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Lifecycle</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#depositor" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Depositor</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#bidder-pull-based-closing-a-round-never-iterates-bidders" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Bidder: pull-based; closing a round never iterates bidders</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#admin" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Admin</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#views-and-sep-41" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Views and SEP-41</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#storage-model" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Storage model</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#enums" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Enums</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#events" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Events</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#errors" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Errors</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#test-strategy" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Test strategy</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/AntaresDocs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-nkmraz2k"><div class="sl-container astro-nkmraz2k"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#standards" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Standards</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#lifecycle" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Lifecycle</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#depositor" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Depositor</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#bidder-pull-based-closing-a-round-never-iterates-bidders" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Bidder: pull-based; closing a round never iterates bidders</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#admin" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Admin</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#views-and-sep-41" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Views and SEP-41</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#storage-model" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Storage model</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#enums" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Enums</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#events" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Events</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#errors" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Errors</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#test-strategy" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Test strategy</span></a></li></ul></nav></starlight-toc><script type="module" src="/AntaresDocs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-7bq7y7x2"><main data-pagefind-body class="astro-ddokiihg" lang="en" dir="ltr"><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><h1 id="_top" class="astro-2tzqtbsn">Contract surface</h1><p class="antares-deck">Forty-two exported functions, thirty-six events, and every error code — for integrators and reviewers.</p></div></div><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><div class="sl-markdown-content"><p>One contract. Module boundaries live in the code — <code dir="auto">vault</code>, <code dir="auto">token</code>, <code dir="auto">epoch</code>, <code dir="auto">auction</code>, <code dir="auto">settle</code>,
+<code dir="auto">oracle</code>, <code dir="auto">claims</code>, <code dir="auto">admin</code> — not at addresses, so no path costs a cross-contract hop. The split is
+an implementation detail and may change; what does not change is the cost.</p>
+<p><code dir="auto">stellar contract info interface</code> on the deployed vault returns <strong>42 functions</strong>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="standards">Standards</h2><a class="sl-anchor-link" href="#standards"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Standards”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Question</th><th>Decision</th></tr></thead><tbody><tr><td>Share token interface</td><td><strong>SEP-41</strong>, implemented inside the vault contract. Wallets, explorers and DEXes read it like any other Soroban token, and a separate token contract would add a cross-contract hop on every mint and burn for no benefit</td></tr><tr><td>ERC-4626-style vault standards</td><td><strong>Followed where they do not conflict; the accounting is not inherited.</strong> 4626-style vaults assume deposit and redeem are continuous and instant. A covered-call vault locks collateral for the duration of a round. 4626-shaped views (<code dir="auto">total_assets</code>, <code dir="auto">convert_to_shares</code>) are exposed for tooling; issuance is round-gated</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="lifecycle">Lifecycle</h2><a class="sl-anchor-link" href="#lifecycle"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Lifecycle”</span></a></div>
+<div class="expressive-code"><link rel="stylesheet" href="/AntaresDocs/_astro/ec.w36nc.css"><script type="module" src="/AntaresDocs/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">__constructor</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">admin</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">asset</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">oracle</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">fee_recipient</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address,</span></div></div><div class="ec-line"><div class="code"><span class="indent">                 </span><span style="--0:#C5E478;--1:#3B61B0">params</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> EpochParams, </span><span style="--0:#C5E478;--1:#3B61B0">token_suffix</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> String, </span><span style="--0:#C5E478;--1:#3B61B0">deposit_cap</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128,</span></div></div><div class="ec-line"><div class="code"><span class="indent">                 </span><span style="--0:#C5E478;--1:#3B61B0">rent_threshold</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">rent_extend_to</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">allowlist_expires_at</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u64);</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">open_epoch</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> bool;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">bid</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">bidder</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">notional</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128, </span><span style="--0:#C5E478;--1:#3B61B0">max_premium_bps</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">close_round</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">bounty_to</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> RoundOutcome;</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn __constructor(env: Env, admin: Address, asset: Address, oracle: Address, fee_recipient: Address,                 params: EpochParams, token_suffix: String, deposit_cap: i128,                 rent_threshold: u32, rent_extend_to: u32, allowlist_expires_at: u64);fn open_epoch(env: Env) -> bool;fn bid(env: Env, bidder: Address, notional: i128, max_premium_bps: u32) -> i128;fn close_round(env: Env, bounty_to: Address) -> RoundOutcome;"><div></div></button></div></figure></div>
+<p><code dir="auto">fee_bps</code> (0), <code dir="auto">paused</code> (false) and <code dir="auto">allowlist_enabled</code> (true) are <strong>genesis constants, not
+arguments</strong>: a non-zero fee then requires a separate, publicly visible transaction rather than our
+word. <code dir="auto">allowlist_expires_at</code> has no setter and is capped at 30 days from construction.</p>
+<p><strong>Two senses of “permissionless”, and they are not the same.</strong> <code dir="auto">open_epoch</code> and <code dir="auto">close_round</code> take
+<strong>no authorization at all</strong> — no signature from any particular party — which is what lets a depositor
+close their own round when nobody else does. <code dir="auto">bid</code> is open to anyone in the sense that no gatekeeper
+decides who may be a bidder, but it is <strong>signed by the bidder</strong>, and until the allowlist expires it
+can be narrowed further.</p>
+<p><code dir="auto">open_epoch</code> returns <code dir="auto">false</code> rather than reverting when it first finalized a lapsed round and then
+hit a failed precondition — the finalization is kept.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="depositor">Depositor</h2><a class="sl-anchor-link" href="#depositor"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Depositor”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">deposit</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">from</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">amount</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;    </span><span style="--0:#919F9F;--1:#5D6376">// shares minted; 0 for a pending deposit</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">cancel_pending_deposit</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">from</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;   </span><span style="--0:#919F9F;--1:#5D6376">// only funds never locked</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">redeem_shares</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">from</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;            </span><span style="--0:#919F9F;--1:#5D6376">// pending deposit -> shares; Idle only</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">request_withdraw</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">from</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">shares</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128, </span><span style="--0:#C5E478;--1:#3B61B0">require_idle</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> bool) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">claim_withdraw</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">from</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">restore_position</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">user</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address);                 </span><span style="--0:#919F9F;--1:#5D6376">// archival recovery; callable by anyone</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn deposit(env: Env, from: Address, amount: i128) -> i128;    // shares minted; 0 for a pending depositfn cancel_pending_deposit(env: Env, from: Address) -> i128;   // only funds never lockedfn redeem_shares(env: Env, from: Address) -> i128;            // pending deposit -> shares; Idle onlyfn request_withdraw(env: Env, from: Address, shares: i128, require_idle: bool) -> i128;fn claim_withdraw(env: Env, from: Address) -> i128;fn restore_position(env: Env, user: Address);                 // archival recovery; callable by anyone"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="bidder-pull-based-closing-a-round-never-iterates-bidders">Bidder: pull-based; closing a round never iterates bidders</h2><a class="sl-anchor-link" href="#bidder-pull-based-closing-a-round-never-iterates-bidders"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Bidder: pull-based; closing a round never iterates bidders”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">claim_payout</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">round</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">bidder</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;  </span><span style="--0:#919F9F;--1:#5D6376">// after a Settled round, spot > strike</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">claim_refund</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">round</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">bidder</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;  </span><span style="--0:#919F9F;--1:#5D6376">// after a Voided round</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">claim_fee</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;                                  </span><span style="--0:#919F9F;--1:#5D6376">// fee_recipient pulls accrued fee</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn claim_payout(env: Env, round: u32, bidder: Address) -> i128;  // after a Settled round, spot > strikefn claim_refund(env: Env, round: u32, bidder: Address) -> i128;  // after a Voided roundfn claim_fee(env: Env) -> i128;                                  // fee_recipient pulls accrued fee"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="admin">Admin</h2><a class="sl-anchor-link" href="#admin"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Admin”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_paused</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">paused</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> bool);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_deposit_cap</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">cap</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_fee_bps</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">bps</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32);                   </span><span style="--0:#919F9F;--1:#5D6376">// genesis value 0; capped at 2 000</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_epoch_params</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">params</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> EpochParams);   </span><span style="--0:#919F9F;--1:#5D6376">// takes effect next round only</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_allowlist_enabled</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">enabled</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> bool);    </span><span style="--0:#919F9F;--1:#5D6376">// can open bidding early; cannot extend the gate</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_allowed</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">bidder</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address, </span><span style="--0:#C5E478;--1:#3B61B0">allowed</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> bool);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_fee_recipient</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">recipient</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">set_rent_params</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">threshold</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">extend_to</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">transfer_admin</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">new_admin</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address);      </span><span style="--0:#919F9F;--1:#5D6376">// two-step handover:</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">accept_admin</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env);                            </span><span style="--0:#919F9F;--1:#5D6376">//   a typo'd address cannot brick the role</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">upgrade</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">new_wasm_hash</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> BytesN&#x3C;</span><span style="--0:#C5E478;--1:#3B61B0">32</span><span style="--0:#D6DEEB;--1:#403F53">>);</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">migrate</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">to_version</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32);                </span><span style="--0:#919F9F;--1:#5D6376">// monotonic, idempotent</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn set_paused(env: Env, paused: bool);fn set_deposit_cap(env: Env, cap: i128);fn set_fee_bps(env: Env, bps: u32);                   // genesis value 0; capped at 2 000fn set_epoch_params(env: Env, params: EpochParams);   // takes effect next round onlyfn set_allowlist_enabled(env: Env, enabled: bool);    // can open bidding early; cannot extend the gatefn set_allowed(env: Env, bidder: Address, allowed: bool);fn set_fee_recipient(env: Env, recipient: Address);fn set_rent_params(env: Env, threshold: u32, extend_to: u32);fn transfer_admin(env: Env, new_admin: Address);      // two-step handover:fn accept_admin(env: Env);                            //   a typo&#x27;d address cannot brick the rolefn upgrade(env: Env, new_wasm_hash: BytesN<32>);fn migrate(env: Env, to_version: u32);                // monotonic, idempotent"><div></div></button></div></figure></div>
+<p><strong>There is no <code dir="auto">set_oracle</code> and no <code dir="auto">set_asset</code>.</strong> Repointing the price feed is not a setter at all; it
+requires a reviewed upgrade.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="views-and-sep-41">Views and SEP-41</h2><a class="sl-anchor-link" href="#views-and-sep-41"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Views and SEP-41”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">epoch</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> EpochInfo;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">position</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">user</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> Position;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">config</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> ConfigView;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">bidder_position</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">round</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32, </span><span style="--0:#C5E478;--1:#3B61B0">bidder</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> BidderPosition;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">price_per_share</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">round</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> u32) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">total_assets</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">convert_to_shares</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">assets</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> i128) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> i128;</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// SEP-41</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C5E478;--1:#3B61B0">balance</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">transfer</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">transfer_from</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">approve</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">allowance</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">burn</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">burn_from</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">decimals</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">name</span><span style="--0:#D6DEEB;--1:#403F53"> · </span><span style="--0:#C5E478;--1:#3B61B0">symbol</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn epoch(env: Env) -> EpochInfo;fn position(env: Env, user: Address) -> Position;fn config(env: Env) -> ConfigView;fn bidder_position(env: Env, round: u32, bidder: Address) -> BidderPosition;fn price_per_share(env: Env, round: u32) -> i128;fn total_assets(env: Env) -> i128;fn convert_to_shares(env: Env, assets: i128) -> i128;// SEP-41fn balance · transfer · transfer_from · approve · allowance · burn · burn_from · decimals · name · symbol"><div></div></button></div></figure></div>
+<p><code dir="auto">EpochInfo</code> carries the derived fields an interface needs without a second round trip:
+<code dir="auto">current_premium_bps</code> (0 outside the auction window), <code dir="auto">outcome_pending</code>, <code dir="auto">next_open_at</code>,
+<code dir="auto">void_available_at</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="storage-model">Storage model</h2><a class="sl-anchor-link" href="#storage-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Storage model”</span></a></div>
+<p>Amounts are <code dir="auto">i128</code> in stroops (7 decimals). Ratios are basis points (<code dir="auto">u32</code>, 10 000 = 100 %).
+<code dir="auto">PRECISION = 10 000 000</code> for price per share.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Key</th><th>Value</th><th>TTL</th></tr></thead><tbody><tr><td>instance</td><td><code dir="auto">Config</code></td><td>admin, pending_admin, asset, oracle, fee_recipient, token_suffix, fee_bps, deposit_cap, paused, allowlist_enabled, allowlist_expires_at, params, rent params</td><td>bumped on every write</td></tr><tr><td>instance</td><td><code dir="auto">State</code></td><td>the round · its clock · its prices · what was sold · what it started from · running totals · the four claim pools</td><td>bumped on every write</td></tr><tr><td>instance</td><td><code dir="auto">AppVersion</code></td><td><code dir="auto">u32</code> migration schema version</td><td>bumped on every write</td></tr><tr><td>persistent</td><td><code dir="auto">Shares(Address)</code></td><td><code dir="auto">i128</code></td><td>bumped on touch</td></tr><tr><td>persistent</td><td><code dir="auto">Allowance(Address, Address)</code></td><td>SEP-41 allowance with <code dir="auto">live_until_ledger</code></td><td>bumped on touch</td></tr><tr><td>persistent</td><td><code dir="auto">PendingDeposit(Address)</code></td><td><code dir="auto">{ round, amount }</code></td><td>bumped on touch</td></tr><tr><td>persistent</td><td><code dir="auto">PendingWithdraw(Address)</code></td><td><code dir="auto">{ round, shares }</code></td><td>bumped on touch; <strong>also bumps <code dir="auto">Round(round)</code></strong></td></tr><tr><td>persistent</td><td><code dir="auto">Round(u32)</code></td><td><code dir="auto">{ outcome, pps, strike, expiry, notional_sold, premium, fee, settled_spot, payout_total }</code></td><td>bumped while any pending withdrawal or fill references it</td></tr><tr><td>persistent</td><td><code dir="auto">Fill(u32, Address)</code></td><td><code dir="auto">{ notional, premium_paid, claimed }</code></td><td>bumped on touch; <strong>also bumps <code dir="auto">Round(round)</code></strong></td></tr><tr><td>persistent</td><td><code dir="auto">Allowed(Address)</code></td><td><code dir="auto">bool</code></td><td>bumped on touch</td></tr><tr><td><strong>temporary</strong></td><td>—</td><td><strong>nothing</strong></td><td>no value-bearing state is temporary, ever</td></tr></tbody></table>
+<p><code dir="auto">State</code> is one struct of twenty-five fields, and the last group is why it is worth reading in full:
+<a href="/AntaresDocs/trust/invariants/#i1-solvency">I1</a> bounds the contract’s balance below by <code dir="auto">locked_assets</code> plus
+four claim pools — <strong>five terms, and every one of them is a field here.</strong> The invariant is checkable
+against storage rather than recomputable only by replaying events.</p>
+<p>A <code dir="auto">Round</code> record may only be allowed to expire once no <code dir="auto">PendingWithdraw</code> references it.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="enums">Enums</h2><a class="sl-anchor-link" href="#enums"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Enums”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">enum</span><span style="--0:#D6DEEB;--1:#403F53"> Phase        { Idle, Auction, Active }</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">enum</span><span style="--0:#D6DEEB;--1:#403F53"> RoundOutcome { Settled, Lapsed, Voided, Unresolved }</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">enum</span><span style="--0:#D6DEEB;--1:#403F53"> VoidReason   { FeedUnusable, InvalidPrice }</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="enum Phase        { Idle, Auction, Active }enum RoundOutcome { Settled, Lapsed, Voided, Unresolved }enum VoidReason   { FeedUnusable, InvalidPrice }"><div></div></button></div></figure></div>
+<p><code dir="auto">VoidReason</code> has two variants and both are reachable. Ones that were not reachable were removed
+rather than reserved, on the grounds that an unobservable variant is ABI an integrator must handle
+and can never see.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="events">Events</h2><a class="sl-anchor-link" href="#events"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Events”</span></a></div>
+<p><strong>Thirty-six in all: the thirty-one below, plus the five the share token emits as a SEP-41 token —
+<code dir="auto">transfer</code>, <code dir="auto">transfer_muxed</code>, <code dir="auto">mint</code>, <code dir="auto">burn</code>, <code dir="auto">approve</code>.</strong> Those follow the standard. There is no
+<code dir="auto">clawback</code>, because there is no clawback.</p>
+<p>Every state transition emits. An off-chain collector or dashboard can read only events; no indexer
+needs to reconstruct state from storage.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">initialized{admin, asset, oracle, fee_recipient, token_suffix, deposit_cap,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">            </span></span><span style="--0:#d6deeb;--1:#403f53">rent_threshold, rent_extend_to, allowlist_expires_at, params,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">            </span></span><span style="--0:#d6deeb;--1:#403f53">fee_bps, paused, allowlist_enabled, app_version}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">deposited{user, round, amount, shares_minted, instant}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">deposit_cancelled{user, round, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">pending_redeemed{user, round, amount, shares, pps}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">withdraw_requested{user, round, shares}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">withdraw_claimed{user, round, shares, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">position_restored{user}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">epoch_opened{round, strike, expiry, opened_at, auction_end,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">             </span></span><span style="--0:#d6deeb;--1:#403f53">notional_offered, open_twap, premium_start_bps, premium_floor_bps}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">bid_filled{round, bidder, notional, premium_bps, premium, notional_sold_after}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">epoch_lapsed{round, notional_offered, pps, wclaims}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">settled{round, spot, strike, notional_sold, payout_total, premium, fee, pps, wclaims}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">epoch_voided{round, reason, premium_refunded, pps, wclaims}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">epoch_unresolved{round, premium_retained, fee, pps, wclaims, oracle_answered}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">payout_claimed{round, bidder, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">refund_claimed{round, bidder, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">fee_accrued{round, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">fee_claimed{recipient, amount}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">settle_bounty{round, to, amount}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">paused{by} · unpaused{by} · params_changed{params}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">cap_changed{old, new} · fee_changed{old, new} · fee_recipient_changed{old, new}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">allowlist_toggled{enabled} · allowed_changed{bidder, allowed}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">rent_params_changed{old_threshold, new_threshold, old_extend_to, new_extend_to}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">admin_transfer_started{current, pending} · admin_changed{old, new}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">upgraded{wasm_hash, app_version} · migrated{from_version, to_version}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="initialized{admin, asset, oracle, fee_recipient, token_suffix, deposit_cap,            rent_threshold, rent_extend_to, allowlist_expires_at, params,            fee_bps, paused, allowlist_enabled, app_version}deposited{user, round, amount, shares_minted, instant}deposit_cancelled{user, round, amount}pending_redeemed{user, round, amount, shares, pps}withdraw_requested{user, round, shares}withdraw_claimed{user, round, shares, amount}position_restored{user}epoch_opened{round, strike, expiry, opened_at, auction_end,             notional_offered, open_twap, premium_start_bps, premium_floor_bps}bid_filled{round, bidder, notional, premium_bps, premium, notional_sold_after}epoch_lapsed{round, notional_offered, pps, wclaims}settled{round, spot, strike, notional_sold, payout_total, premium, fee, pps, wclaims}epoch_voided{round, reason, premium_refunded, pps, wclaims}epoch_unresolved{round, premium_retained, fee, pps, wclaims, oracle_answered}payout_claimed{round, bidder, amount}refund_claimed{round, bidder, amount}fee_accrued{round, amount}fee_claimed{recipient, amount}settle_bounty{round, to, amount}paused{by} · unpaused{by} · params_changed{params}cap_changed{old, new} · fee_changed{old, new} · fee_recipient_changed{old, new}allowlist_toggled{enabled} · allowed_changed{bidder, allowed}rent_params_changed{old_threshold, new_threshold, old_extend_to, new_extend_to}admin_transfer_started{current, pending} · admin_changed{old, new}upgraded{wasm_hash, app_version} · migrated{from_version, to_version}"><div></div></button></div></figure></div>
+<p>Four things an indexer has to know:</p>
+<ol>
+<li><strong>All four finalization events carry <code dir="auto">wclaims</code>.</strong> Every outcome credits the withdrawal queue, so
+an indexer that only read it on <code dir="auto">settled</code> would drift permanently the first time a round lapsed
+with a queued exit.</li>
+<li><strong><code dir="auto">settle_bounty</code> is a separate event and is not emitted when the bounty floors to zero.</strong>
+Checking <code dir="auto">assets_after = assets_before + premium − payout − fee − bounty</code> against <code dir="auto">settled</code> alone
+leaves you short the bounty term.</li>
+<li><strong><code dir="auto">upgraded</code> carries the wasm hash and the <em>schema</em> version, which <code dir="auto">upgrade</code> does not change.</strong>
+Code and schema are versioned separately; only <code dir="auto">migrate</code> moves the second.</li>
+<li><strong><code dir="auto">epoch_lapsed</code>, <code dir="auto">epoch_voided</code> and <code dir="auto">epoch_unresolved</code> are first-class.</strong> An auction that clears
+empty is a data point about demand, not a failure to hide. <code dir="auto">epoch_unresolved</code> carries
+<code dir="auto">oracle_answered</code>, which distinguishes the two ways into that outcome.</li>
+</ol>
+<p><strong>Rejected calls emit nothing</strong>, because in Soroban a reverting invocation discards its events along
+with its state — an event on a failing path is not implementable. A stale or deviating feed is
+observed through the error code that simulation returns.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="errors">Errors</h2><a class="sl-anchor-link" href="#errors"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Errors”</span></a></div>
+<p><strong>Error numbers are ABI.</strong> Gaps are never re-used and retired codes stay retired, which is why the
+unallocated numbers are written down rather than left as silent holes.</p>
+<p>Every public function returns <code dir="auto">Result&#x3C;T, Error></code>, the SEP-41 surface included. The one exception is
+arithmetic overflow, which panics: the bounds prove it unreachable, so reaching it means an
+assumption broke and the transaction must die rather than continue on a wrapped value. <strong>No
+foreseeable condition panics</strong> — “insufficient balance” is <code dir="auto">InsufficientBalance</code>, not a checked
+subtraction. Authorization failures surface as Soroban auth errors, never as a variant here. There is
+deliberately no <code dir="auto">NotInitialized</code>: with a <code dir="auto">__constructor</code>, an uninitialized-but-deployed contract is
+unrepresentable.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Error</th><th>Meaning</th></tr></thead><tbody><tr><td>1</td><td><code dir="auto">Paused</code></td><td>Blocked by pause. Only <code dir="auto">deposit</code>, <code dir="auto">bid</code>, <code dir="auto">open_epoch</code> can return it</td></tr><tr><td>2</td><td><code dir="auto">WrongPhase</code></td><td>Wrong lifecycle phase — including a late bid and a fully subscribed offer</td></tr><tr><td>3</td><td><code dir="auto">IdleGapNotElapsed</code></td><td>The gap between rounds has not elapsed</td></tr><tr><td>4</td><td><code dir="auto">NotExpired</code></td><td><code dir="auto">close_round</code> before expiry</td></tr><tr><td>6</td><td><code dir="auto">OracleNotDeadYet</code></td><td>Dead at expiry, but before <code dir="auto">expiry + oracle_dead_after</code></td></tr><tr><td>7</td><td><code dir="auto">NothingOffered</code></td><td><code dir="auto">open_epoch</code> with less than <code dir="auto">min_fill</code> locked</td></tr><tr><td>8</td><td><code dir="auto">NoShares</code></td><td>The vault has never had a deposit</td></tr><tr><td>9</td><td><code dir="auto">RoundNotFound</code></td><td>That round never existed. Distinct from <em>archived</em></td></tr><tr><td>10</td><td><code dir="auto">OracleStale</code></td><td>Feed older than <code dir="auto">max_staleness</code>, at open</td></tr><tr><td>11</td><td><code dir="auto">OracleDeviation</code></td><td>Short and guard windows diverge past the breaker, at open</td></tr><tr><td>12</td><td><code dir="auto">OracleInvalidPrice</code></td><td>Non-positive or absurd price</td></tr><tr><td>13</td><td><code dir="auto">OracleUnreachable</code></td><td>The adapter call itself failed — trap or budget</td></tr><tr><td>20</td><td><code dir="auto">BelowMinDeposit</code></td><td></td></tr><tr><td>21</td><td><code dir="auto">DepositCapExceeded</code></td><td></td></tr><tr><td>22</td><td><code dir="auto">NothingPending</code></td><td></td></tr><tr><td>24</td><td><code dir="auto">UnredeemedPending</code></td><td>An earlier queued deposit is still unredeemed</td></tr><tr><td>25</td><td><code dir="auto">InsufficientShares</code></td><td></td></tr><tr><td>26</td><td><code dir="auto">NothingToClaim</code></td><td></td></tr><tr><td>27</td><td><code dir="auto">WithdrawNotSettled</code></td><td>The round this withdrawal belongs to has not finalized</td></tr><tr><td>29</td><td><code dir="auto">InsufficientAllowance</code></td><td>SEP-41</td></tr><tr><td>30</td><td><code dir="auto">AllowlistForbidden</code></td><td>Launch control, and it expires</td></tr><tr><td>31</td><td><code dir="auto">PremiumAboveMax</code></td><td>The bidder’s own slippage guard</td></tr><tr><td>32</td><td><code dir="auto">BelowMinFill</code></td><td>Dust guard; the final sliver of an offer is exempt</td></tr><tr><td>34</td><td><code dir="auto">InTheMoney</code></td><td>Spot has reached the strike; the vault will not sell intrinsic value</td></tr><tr><td>35</td><td><code dir="auto">ZeroPremium</code></td><td>The fill is too small to pay a premium</td></tr><tr><td>36</td><td><code dir="auto">InsufficientBalance</code></td><td>SEP-41, never a raw panic</td></tr><tr><td>37</td><td><code dir="auto">AlreadyClaimed</code></td><td></td></tr><tr><td>38</td><td><code dir="auto">NoFill</code></td><td>Claim by an address that never filled that round</td></tr><tr><td>39</td><td><code dir="auto">WrongOutcome</code></td><td><code dir="auto">claim_payout</code> on a non-settled round, or <code dir="auto">claim_refund</code> on a non-voided one</td></tr><tr><td>40</td><td><code dir="auto">InvalidAmount</code></td><td>Non-positive amount, anywhere</td></tr><tr><td>41</td><td><code dir="auto">InvalidParams</code></td><td></td></tr><tr><td>44</td><td><code dir="auto">ZeroShares</code></td><td>A mint that would round to zero shares</td></tr><tr><td>51</td><td><code dir="auto">MigrationOrder</code></td><td><code dir="auto">migrate</code> target version is not monotonic</td></tr><tr><td>52</td><td><code dir="auto">NoPendingAdmin</code></td><td><code dir="auto">accept_admin</code> with no pending transfer</td></tr><tr><td>53</td><td><code dir="auto">InvalidAddress</code></td><td>The contract’s own address, or a role collision such as <code dir="auto">asset == oracle</code></td></tr><tr><td>54</td><td><code dir="auto">VaultWorthless</code></td><td>A mint while <code dir="auto">pps == 0</code>. <strong>Withdrawals still work — that asymmetry is the point</strong></td></tr></tbody></table>
+<p>Unallocated, permanently: <strong>5</strong> (<code dir="auto">AuctionClosed</code>, retired — the phase moves before a late bid is
+evaluated), <strong>23</strong> (<code dir="auto">PendingNotFinalized</code>, unreachable), <strong>28</strong> (<code dir="auto">PendingAlreadyFinalized</code>, retired —
+cancel is now always allowed), <strong>33</strong> (<code dir="auto">SoldOut</code>, retired — no transaction can reach a zero fill),
+<strong>55–56</strong> (three rejections that existed when there were three terminal entry points; collapsing them
+into one dispatcher made all three unreachable).</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="test-strategy">Test strategy</h2><a class="sl-anchor-link" href="#test-strategy"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Test strategy”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Covers</th></tr></thead><tbody><tr><td><strong>Unit</strong></td><td>Every state transition, including every rejected one. Each guard has a test that proves it rejects</td></tr><tr><td><strong>Integration</strong></td><td>Full rounds against testnet: open → bid → settle, plus the lapse path and the void path</td></tr><tr><td><strong>Property-based</strong></td><td>Settlement math and round accounting. For arbitrary <code dir="auto">(spot, strike, notional, deposits, withdrawals)</code>: I1–I10 hold, <code dir="auto">payout ∈ [0, notional_sold)</code>, and <code dir="auto">pps ≥ 0</code> with every withdrawal claim from a <code dir="auto">pps == 0</code> round still summing to no more than the pool</td></tr><tr><td><strong>Fuzz</strong></td><td>Call-sequence fuzzing in adversarial orderings — over-sell attempts, double-settle, settle-before-expiry, bid-after-close. Every ordering is repeated under <code dir="auto">paused == true</code> to prove I8</td></tr><tr><td><strong>Differential</strong></td><td>Curve, settlement and claim output replayed against an independent Python reference written from the spec, not from the Rust. All four sections agree byte for byte on the four hand-written vectors. <strong>A generated 204-vector corpus is currently red on about 87 of them</strong> — one categorised cause, and a specification question rather than a defect in either implementation: two documents disagree about which error a post-sellout bid should return. The contract answers <code dir="auto">WrongPhase</code>, which is what makes the retired <code dir="auto">SoldOut</code> code unreachable</td></tr></tbody></table>
+<p>Stale feeds and deviating prices are simulated through a mock price source rather than waited for.
+That mock is deployed nowhere.</p></div><footer class="sl-flex astro-l4t74iij"><div class="meta sl-flex astro-l4t74iij"></div><div class="pagination-links print:hidden astro-53soymxa" dir="ltr"><a href="/AntaresDocs/reference/deployment/" rel="prev" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-53soymxa">Previous<br class="astro-53soymxa"><span class="link-title astro-53soymxa">What is deployed</span></span></a><a href="/AntaresDocs/reference/glossary/" rel="next" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-53soymxa">Next<br class="astro-53soymxa"><span class="link-title astro-53soymxa">Glossary</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>

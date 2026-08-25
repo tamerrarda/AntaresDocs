@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-ddokiihg"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>What is deployed | Antares</title><link rel="canonical" href="https://tamerrarda.github.io/AntaresDocs/reference/deployment/"/><link rel="sitemap" href="/AntaresDocs/sitemap-index.xml"/><link rel="icon" href="/antares-mark-48.webp" type="image/webp"/><link rel="apple-touch-icon" href="/antares-mark-192.webp"/><link rel="shortcut icon" href="/AntaresDocs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.2.4"/><meta name="generator" content="Starlight v0.41.8"/><meta property="og:title" content="What is deployed"/><meta property="og:type" content="article"/><meta property="og:url" content="https://tamerrarda.github.io/AntaresDocs/reference/deployment/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><meta property="og:site_name" content="Antares"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/AntaresDocs/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/AntaresDocs/_astro/common.CY6E1EKB.css"><script type="module" src="/AntaresDocs/_astro/page.BBe2jelq.js"></script></head><body class="astro-ddokiihg"><a class="sl-skip-link astro-j4noll2n" href="#_top">Skip to content</a><div class="page sl-flex astro-mcy6wt2x"><header class="header astro-mcy6wt2x"><div class="header astro-axdl6znk"><div class="title-wrapper sl-flex astro-axdl6znk"><a href="/AntaresDocs/" class="site-title sl-flex astro-3oiknwzh"><img class="astro-3oiknwzh" alt="Antares" src="/AntaresDocs/_astro/antares-mark-48.DF1IdnAQ.webp" width="48" height="55"><span class="astro-3oiknwzh" translate="no">Antares</span></a></div><div class="sl-flex print:hidden astro-axdl6znk"><site-search class="astro-axdl6znk astro-yb6hr64j" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-yb6hr64j"><svg aria-hidden="true" class="astro-yb6hr64j astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-yb6hr64j" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-yb6hr64j" style="display: none;"><kbd class="astro-yb6hr64j">Ctrl</kbd><kbd class="astro-yb6hr64j">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-yb6hr64j"><div class="dialog-frame sl-flex astro-yb6hr64j"><button data-close-modal class="sl-flex md:sl-hidden astro-yb6hr64j">Cancel</button><div class="search-container astro-yb6hr64j"><div id="starlight__search" class="astro-yb6hr64j"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/AntaresDocs/_astro/Search.astro_astro_type_script_index_0_lang.DDCxZFw4.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-axdl6znk"><div class="sl-flex social-icons astro-axdl6znk"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-mcy6wt2x" aria-label="Main"><starlight-menu-button class="print:hidden astro-v6ipcuxz"><button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-v6ipcuxz"><svg aria-hidden="true" class="open-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg></button></starlight-menu-button><script type="module">var e=class extends HTMLElement{btn=this.querySelector(`button`);constructor(){super(),this.btn.addEventListener(`click`,()=>this.toggleExpanded());let e=this.closest(`nav`);e&&e.addEventListener(`keyup`,e=>this.closeOnEscape(e)),matchMedia(`(min-width: 50em)`).addEventListener(`change`,()=>this.setExpanded(!1))}setExpanded(e){this.setAttribute(`aria-expanded`,String(e)),document.body.toggleAttribute(`data-mobile-menu-expanded`,e),document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}toggleExpanded(){this.setExpanded(this.getAttribute(`aria-expanded`)!==`true`)}closeOnEscape(e){e.code===`Escape`&&(this.setExpanded(!1),this.btn.focus())}};customElements.define(`starlight-menu-button`,e);</script><div id="starlight__sidebar" class="sidebar-pane astro-mcy6wt2x"><div class="sidebar-content sl-flex astro-mcy6wt2x"><sl-sidebar-state-persist data-hash="1el75l8" class="astro-wqf42o3a"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-ikqq2z2l"><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Start here</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Antares</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/covered-call/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What a covered call is</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/why-antares/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Why this exists</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/status/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Where this stands</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">How it works</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-lifecycle/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">One round, end to end</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/auction/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How the premium is discovered</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/settlement/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How a round is settled</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-outcomes/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The four ways a round ends</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/price-feed/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The price feed</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Depositors</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/depositing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Depositing</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/withdrawing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Getting your money out</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/what-you-give-up/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you give up</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Counterparties</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/what-you-are-buying/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you are buying</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/bidding-and-payout/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Bidding, and getting paid</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/pricing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Pricing it yourself</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Trust and risk</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/trust-model/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Who can do what to your funds</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/invariants/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The properties that must always hold</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/risks/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Risks, stated plainly</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/incidents/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">If something breaks</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Reference</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/deployment/" aria-current="page" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What is deployed</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/contract-surface/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Contract surface</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/glossary/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Glossary</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/security/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Reporting a vulnerability</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-rhmlmlok"><div class="social-icons astro-rhmlmlok"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></div></nav><div class="main-frame astro-mcy6wt2x"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-7bq7y7x2"><aside class="right-sidebar-container print:hidden astro-7bq7y7x2"><div class="right-sidebar astro-7bq7y7x2"><div class="lg:sl-hidden astro-nkmraz2k"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-hx74dxpp"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-hx74dxpp"><details id="starlight__mobile-toc" class="astro-hx74dxpp"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-hx74dxpp"><span class="toggle sl-flex astro-hx74dxpp">On this page<svg aria-hidden="true" class="caret astro-hx74dxpp astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-hx74dxpp"></span></summary><div class="dropdown astro-hx74dxpp"><ul class="isMobile astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#contracts" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Contracts</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#share-token" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Share token</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#parameters" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Parameters</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#deployment-transactions" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Deployment transactions</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#toolchain" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Toolchain</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#reproducing-the-hashes" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Reproducing the hashes</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-measured-feed-profile" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The measured feed profile</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#what-the-deployment-record-marks-and-why" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">What the deployment record marks, and why</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#related" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Related</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/AntaresDocs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-nkmraz2k"><div class="sl-container astro-nkmraz2k"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#contracts" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Contracts</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#share-token" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Share token</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#parameters" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Parameters</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#deployment-transactions" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Deployment transactions</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#toolchain" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Toolchain</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#reproducing-the-hashes" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Reproducing the hashes</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-measured-feed-profile" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The measured feed profile</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#what-the-deployment-record-marks-and-why" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">What the deployment record marks, and why</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#related" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Related</span></a></li></ul></nav></starlight-toc><script type="module" src="/AntaresDocs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-7bq7y7x2"><main data-pagefind-body class="astro-ddokiihg" lang="en" dir="ltr"><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><h1 id="_top" class="astro-2tzqtbsn">What is deployed</h1><p class="antares-deck">Every address, hash, parameter and transaction, and how to check each of them without asking us for anything.</p></div></div><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><div class="sl-markdown-content"><blockquote>
+<p><strong>Status —</strong> Stellar <strong>testnet</strong> only, one vault, <strong>unaudited</strong>.
+<a href="/AntaresDocs/start/status/">Where this stands</a>.</p>
+</blockquote>
+<p>Everything below is committed to the repository in
+<code dir="auto">deployments/testnet.json</code>, written by the deploy script as it submits — not by hand, and not
+afterwards. A testnet reset erases the transactions themselves, and a hash not written down at
+submission cannot be recovered later at all.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="contracts">Contracts</h2><a class="sl-anchor-link" href="#contracts"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Contracts”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Address</th><th>Wasm SHA-256</th></tr></thead><tbody><tr><td><strong>Vault</strong> — <code dir="auto">aXLM-E</code>, 3-day, 3 % OTM</td><td><a href="https://stellar.expert/explorer/testnet/contract/CCYAHS4DJLGNDU7GTSDUJL4ZZ2X6VZI7IPHJM2W2SNVA6RDALEALBVEA"><code dir="auto">CCYAHS4D…LBVEA</code></a></td><td><code dir="auto">7b5f098bddd47b4b9cf8ff22b75a0ead4c41ccd741c61c8ac3dabb579a4a80f2</code></td></tr><tr><td><strong>Price adapter</strong> — what the vault reads</td><td><a href="https://stellar.expert/explorer/testnet/contract/CBR3GSAZUOFGWP5IUSIJP5ESUZPDIO42WAZ5VIFSNYZURH2VVSBCEN5Z"><code dir="auto">CBR3GSAZ…BCEN5Z</code></a></td><td><code dir="auto">d88120b0da3250edea169996ce1840c9138a8c72c2866e846173d0d92f33242d</code></td></tr><tr><td>The CEX &#x26; DEX XLM/USD feed — <strong>a third-party contract, not ours</strong></td><td><a href="https://stellar.expert/explorer/testnet/contract/CCYOZJCOPG34LLQQ7N24YXBM7LL62R7ONMZ3G6WZAAYPB5OYKOMJRN63"><code dir="auto">CCYOZJCO…MJRN63</code></a></td><td>—</td></tr><tr><td>XLM, native Stellar Asset Contract</td><td><a href="https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"><code dir="auto">CDLZFC3S…HHGCYSC</code></a></td><td>—</td></tr></tbody></table>
+<p><strong>The adapter is pinned at the vault’s construction and is immutable</strong> — there is no setter, so
+changing the price source requires a reviewed code upgrade. The adapter itself has no admin and no
+upgrade path at all; its exported surface is <code dir="auto">__constructor</code>, <code dir="auto">reading</code>, <code dir="auto">spot_check</code>,
+<code dir="auto">supports_round</code>, asserted at deploy.</p>
+<p>A mock price source exists in the repository and is <strong>deployed nowhere.</strong> It is the test double that
+lets dead-feed, rescale and trap cases be forced, which a live feed cannot be made to do on demand.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="share-token">Share token</h2><a class="sl-anchor-link" href="#share-token"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Share token”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Symbol</td><td><code dir="auto">aXLM-E</code></td></tr><tr><td>Name</td><td>Antares XLM Vault Share</td></tr><tr><td>Decimals</td><td>7</td></tr><tr><td>Interface</td><td>SEP-41, implemented inside the vault contract</td></tr></tbody></table>
+<p>The suffix is a constructor argument, and it exists because five concurrent vaults would issue five
+non-interchangeable tokens. Showing them all as <code dir="auto">aXLM</code> in a wallet would be a way for someone to
+believe they hold something they do not.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="parameters">Parameters</h2><a class="sl-anchor-link" href="#parameters"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Parameters”</span></a></div>
+<p>The shipped set, not a demonstration set. These are the sixteen <code dir="auto">EpochParams</code> fields the
+constructor takes, plus the four constructor arguments that are not <code dir="auto">EpochParams</code> fields.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Raw</th><th>Means</th></tr></thead><tbody><tr><td><code dir="auto">epoch_duration</code></td><td>259 200</td><td><strong>3 days</strong> from open to expiry</td></tr><tr><td><code dir="auto">auction_duration</code></td><td>2 700</td><td><strong>45 minutes</strong> of descending auction</td></tr><tr><td><code dir="auto">min_idle_gap</code></td><td>7 200</td><td><strong>2 hours</strong> minimum between rounds</td></tr><tr><td><code dir="auto">strike_bps_otm</code></td><td>300</td><td>strike is <strong>3 %</strong> above the TWAP at open</td></tr><tr><td><code dir="auto">premium_start_bps</code></td><td>280</td><td>auction starts at <strong>2.80 %</strong> of notional</td></tr><tr><td><code dir="auto">premium_floor_bps</code></td><td>55</td><td>reserve is <strong>0.55 %</strong> of notional</td></tr><tr><td><code dir="auto">twap_window</code></td><td>900</td><td><strong>15-minute</strong> short window, 3 samples, all required</td></tr><tr><td><code dir="auto">guard_window</code></td><td>3 600</td><td><strong>1-hour</strong> guard window, 5 samples, at least 3 required</td></tr><tr><td><code dir="auto">max_staleness</code></td><td>600</td><td><strong>10 minutes</strong>, checked at open only</td></tr><tr><td><code dir="auto">max_deviation_bps</code></td><td>100</td><td>breaker at <strong>1 %</strong> divergence, at open only</td></tr><tr><td><code dir="auto">oracle_dead_after</code></td><td>43 200</td><td><strong>12 hours</strong> past expiry before a void is allowed</td></tr><tr><td><code dir="auto">settle_grace</code></td><td>7 200</td><td><strong>2 hours</strong> — the guaranteed minimum width of the void window</td></tr><tr><td><code dir="auto">unresolved_after</code></td><td>75 600</td><td><strong>21 hours</strong> past expiry, the round closes with no feed call</td></tr><tr><td><code dir="auto">min_fill</code></td><td>1 000 000 000</td><td><strong>100 XLM</strong> minimum bid</td></tr><tr><td><code dir="auto">min_deposit</code></td><td>100 000 000</td><td><strong>10 XLM</strong> minimum deposit</td></tr><tr><td><code dir="auto">settle_bounty_bps</code></td><td>25</td><td><strong>0.25 % of the premium</strong> to whoever closes the round</td></tr><tr><td><code dir="auto">deposit_cap</code></td><td>1 000 000 000 000</td><td><strong>100 000 XLM</strong> — about $19 600 at XLM’s price on 2026-08-22</td></tr><tr><td><code dir="auto">rent_threshold</code> / <code dir="auto">rent_extend_to</code></td><td>120 960 / 518 400</td><td>TTL policy in <strong>ledgers</strong>, not seconds — roughly 7 and 30 days at a five-second close. A touched entry is bumped to the second; an untouched one may archive after it. Ledger close time is not constant, which is why these are tunable</td></tr><tr><td><code dir="auto">allowlist_expires_at</code></td><td>1 788 772 283</td><td><strong>2026-09-07T09:11:23Z</strong> — no setter, capped at 30 days from construction</td></tr></tbody></table>
+<p>Genesis constants, which are <strong>not</strong> constructor arguments: <code dir="auto">fee_bps = 0</code>, <code dir="auto">paused = false</code>,
+<code dir="auto">allowlist_enabled = true</code>. The fee is a constant rather than an argument so that a non-zero fee
+always requires a separate, publicly visible transaction.</p>
+<p>Among the contract-enforced rules on the above: <code dir="auto">settle_bounty_bps ≤ 100</code>, <code dir="auto">fee_bps ≤ 2 000</code>,
+<code dir="auto">auction_duration ≤ epoch_duration ÷ 24</code>, <code dir="auto">min_idle_gap ≥ epoch_duration ÷ 50</code>,
+<code dir="auto">min_deposit > 1 000</code> stroops, <code dir="auto">guard_window > twap_window</code>, <code dir="auto">unresolved_after > oracle_dead_after</code>,
+and the feed’s own eight conditions (<a href="/AntaresDocs/mechanism/price-feed/#what-the-feed-has-to-promise-before-a-round-opens">The price feed</a>).</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="deployment-transactions">Deployment transactions</h2><a class="sl-anchor-link" href="#deployment-transactions"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Deployment transactions”</span></a></div>
+<p>Deployer <code dir="auto">antares-testnet</code> (<a href="https://stellar.expert/explorer/testnet/account/GDFPSLESDEPR2XSNASBK3464NLB7HYG6IS2SX2TYCJK7KUPIEWFEKBQQ"><code dir="auto">GDFPSLES…EKBQQ</code></a>),
+2026-08-24T09:11:48Z, from a <strong>clean tree at commit <code dir="auto">87e4224a</code></strong>. A deploy from a dirty tree is
+refused before anything is submitted, for exactly the reason that a commit id identifies the code
+that ran only if the tree was clean.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Transaction</th></tr></thead><tbody><tr><td>Adapter created</td><td><a href="https://stellar.expert/explorer/testnet/tx/233c858caf45c1b0d2f2df581ce8dbd802f984550a4807e4885d29cdc9cafb9c"><code dir="auto">233c858c…cafb9c</code></a></td></tr><tr><td>Vault <code dir="auto">-E</code> created</td><td><a href="https://stellar.expert/explorer/testnet/tx/9cd2cb4127b622d75f818298a763b4e778432a5021c3303c363b5ce34c5b851e"><code dir="auto">9cd2cb41…5b851e</code></a></td></tr><tr><td>Smoke deposit</td><td><a href="https://stellar.expert/explorer/testnet/tx/d2622e5952c79a5a7f0ce9e77dfe7f40a3fb75e30fb5bb5521cd1c5e15b5ecb0"><code dir="auto">d2622e59…b5ecb0</code></a></td></tr><tr><td>Smoke withdrawal request</td><td><a href="https://stellar.expert/explorer/testnet/tx/d299d00d4487eaa89d985224ea01653c1de35a09b83cb277a5f42921633eb731"><code dir="auto">d299d00d…3eb731</code></a></td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="toolchain">Toolchain</h2><a class="sl-anchor-link" href="#toolchain"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Toolchain”</span></a></div>
+<p>Every version is pinned exactly, never by range or channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Pinned at</th></tr></thead><tbody><tr><td>Rust</td><td><code dir="auto">1.95.0</code></td></tr><tr><td>Build target</td><td><code dir="auto">wasm32v1-none</code></td></tr><tr><td><code dir="auto">soroban-sdk</code></td><td><code dir="auto">=27.0.6</code></td></tr><tr><td><code dir="auto">stellar-cli</code></td><td><code dir="auto">27.1.0</code></td></tr><tr><td>Node</td><td><code dir="auto">v22.18.0</code></td></tr><tr><td>Build host</td><td><code dir="auto">darwin-arm64</code></td></tr></tbody></table>
+<div class="expressive-code"><link rel="stylesheet" href="/AntaresDocs/_astro/ec.w36nc.css"><script type="module" src="/AntaresDocs/_astro/ec.0vx5m.js"></script><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">cargo</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">test</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--workspace</span><span style="--0:#D6DEEB;--1:#403F53">                    </span><span style="--0:#919F9F;--1:#5F636F"># unit + property</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">stellar</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">contract</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">build</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--out-dir</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">out</span><span style="--0:#D6DEEB;--1:#403F53">      </span><span style="--0:#919F9F;--1:#5F636F"># deployable wasm</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="cargo test --workspace                    # unit + propertystellar contract build --out-dir out      # deployable wasm"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="reproducing-the-hashes">Reproducing the hashes</h2><a class="sl-anchor-link" href="#reproducing-the-hashes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Reproducing the hashes”</span></a></div>
+<p>Build the repository at commit <code dir="auto">87e4224a</code> and compare.
+<code dir="auto">stellar contract fetch --id &#x3C;address> --network testnet</code> returns the deployed bytes.</p>
+<p><strong>One caveat, and it is ours rather than yours: the hash reproduces against a host, not against a
+toolchain.</strong></p>
+<p>Measured on 2026-08-21: <code dir="auto">aarch64-apple-darwin</code> and <code dir="auto">x86_64-unknown-linux-gnu</code> build the vault to the
+same <strong>65 374 bytes</strong> and two different SHA-256s. Section by section they agree everywhere it is
+possible to disagree about meaning — <code dir="auto">import</code>, <code dir="auto">export</code>, <code dir="auto">data</code> and all four custom sections
+including <code dir="auto">contractspecv0</code> are byte-identical, and <code dir="auto">stellar contract info interface</code> returns the same
+<strong>42 functions</strong> — while <code dir="auto">type</code>, <code dir="auto">function</code> and <code dir="auto">code</code> differ at identical sizes, because the type
+table is emitted in a different order and every index into it follows. Same program, different
+internal numbering.</p>
+<p>So reproduce on the host that built the artefact. <strong>Both deployments above were built on
+<code dir="auto">aarch64-apple-darwin</code></strong>, and they predate the field that records it: their toolchain block names
+Rust, <code dir="auto">stellar-cli</code>, <code dir="auto">soroban-sdk</code>, the target and Node, but not the machine — the omission this
+measurement found. That host is stated here from the machine that ran the deploy and corroborated by
+the Node version the record does carry; it is not read back out of the record, and that gap is
+exactly what the field closes from 2026-08-21 onward. It is named here rather than backfilled,
+because a record of what happened is worth less once it is edited after the fact.</p>
+<p>On a different host, expect the exported surface and the contract spec to match byte for byte, and
+the SHA-256 not to.</p>
+<p>CI’s reproducible-build job proves a narrower property than its name suggests: it builds twice on one
+runner at deliberately different path lengths, which shows the output does not depend on where the
+source sits, and says nothing about which machine compiled it.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="the-measured-feed-profile">The measured feed profile</h2><a class="sl-anchor-link" href="#the-measured-feed-profile"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “The measured feed profile”</span></a></div>
+<p>From <code dir="auto">deployments/adapter-testnet.json</code>, produced by profiling a contract built from the same wasm
+hash on 2026-08-19:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><code dir="auto">resolution()</code></td><td><strong>300 seconds</strong></td></tr><tr><td><code dir="auto">decimals()</code></td><td>14, normalized to 7 by the adapter</td></tr><tr><td>Reachable depth</td><td><strong>255 ticks</strong> = 76 500 s</td></tr><tr><td>Reach limit for a 1-hour guard window</td><td><strong>72 900 s</strong> = 20 h 15 m</td></tr><tr><td>Boundary, measured</td><td>reads at an anchor age of 72 783 s; out of reach at 73 083 s</td></tr></tbody></table>
+<p>255 rather than 256, and the difference is a void: the feed’s bitmask holds 256 records, which span
+255 intervals, and the reach limit is a <em>depth</em>. With 256 the adapter’s oldest guard sample would
+have landed one tick past the horizon, been dropped, taken the valid count under its threshold, and
+made <strong>a healthy feed produce a void</strong> — the bidder refunded in full for nothing.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="what-the-deployment-record-marks-and-why">What the deployment record marks, and why</h2><a class="sl-anchor-link" href="#what-the-deployment-record-marks-and-why"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “What the deployment record marks, and why”</span></a></div>
+<p><code dir="auto">economicallyMeaningless</code> is <code dir="auto">false</code> on the deployed instance, and that is a claim the record makes
+rather than one this page makes. The field is stamped <code dir="auto">true</code> on any fast-test profile — second-scale
+durations against a price source this project controls — and it is <strong>permanent</strong>: an instance marked
+that way can never afterwards be presented as demand evidence, whatever anyone later says about it.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="related">Related</h2><a class="sl-anchor-link" href="#related"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Related”</span></a></div>
+<ul>
+<li><a href="/AntaresDocs/reference/contract-surface/">Contract surface</a> — the ABI</li>
+<li><a href="/AntaresDocs/mechanism/price-feed/">The price feed</a> — what the adapter does with all of this</li>
+<li><a href="/AntaresDocs/trust/trust-model/#3b-what-you-are-trusting-the-deployment-to-be">Who can do what to your funds</a>
+— why byte-identical builds are a trust question rather than a build question</li>
+</ul></div><footer class="sl-flex astro-l4t74iij"><div class="meta sl-flex astro-l4t74iij"></div><div class="pagination-links print:hidden astro-53soymxa" dir="ltr"><a href="/AntaresDocs/trust/incidents/" rel="prev" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-53soymxa">Previous<br class="astro-53soymxa"><span class="link-title astro-53soymxa">If something breaks</span></span></a><a href="/AntaresDocs/reference/contract-surface/" rel="next" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-53soymxa">Next<br class="astro-53soymxa"><span class="link-title astro-53soymxa">Contract surface</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>

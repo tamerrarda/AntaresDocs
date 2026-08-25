@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-ddokiihg"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>One round, end to end | Antares</title><link rel="canonical" href="https://tamerrarda.github.io/AntaresDocs/mechanism/round-lifecycle/"/><link rel="sitemap" href="/AntaresDocs/sitemap-index.xml"/><link rel="icon" href="/antares-mark-48.webp" type="image/webp"/><link rel="apple-touch-icon" href="/antares-mark-192.webp"/><link rel="shortcut icon" href="/AntaresDocs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.2.4"/><meta name="generator" content="Starlight v0.41.8"/><meta property="og:title" content="One round, end to end"/><meta property="og:type" content="article"/><meta property="og:url" content="https://tamerrarda.github.io/AntaresDocs/mechanism/round-lifecycle/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><meta property="og:site_name" content="Antares"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Covered call vaults on Stellar, built so that the way out never runs through us."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/AntaresDocs/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/AntaresDocs/_astro/common.CY6E1EKB.css"><script type="module" src="/AntaresDocs/_astro/page.BBe2jelq.js"></script></head><body class="astro-ddokiihg"><a class="sl-skip-link astro-j4noll2n" href="#_top">Skip to content</a><div class="page sl-flex astro-mcy6wt2x"><header class="header astro-mcy6wt2x"><div class="header astro-axdl6znk"><div class="title-wrapper sl-flex astro-axdl6znk"><a href="/AntaresDocs/" class="site-title sl-flex astro-3oiknwzh"><img class="astro-3oiknwzh" alt="Antares" src="/AntaresDocs/_astro/antares-mark-48.DF1IdnAQ.webp" width="48" height="55"><span class="astro-3oiknwzh" translate="no">Antares</span></a></div><div class="sl-flex print:hidden astro-axdl6znk"><site-search class="astro-axdl6znk astro-yb6hr64j" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-yb6hr64j"><svg aria-hidden="true" class="astro-yb6hr64j astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-yb6hr64j" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-yb6hr64j" style="display: none;"><kbd class="astro-yb6hr64j">Ctrl</kbd><kbd class="astro-yb6hr64j">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-yb6hr64j"><div class="dialog-frame sl-flex astro-yb6hr64j"><button data-close-modal class="sl-flex md:sl-hidden astro-yb6hr64j">Cancel</button><div class="search-container astro-yb6hr64j"><div id="starlight__search" class="astro-yb6hr64j"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/AntaresDocs/_astro/Search.astro_astro_type_script_index_0_lang.DDCxZFw4.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-axdl6znk"><div class="sl-flex social-icons astro-axdl6znk"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-mcy6wt2x" aria-label="Main"><starlight-menu-button class="print:hidden astro-v6ipcuxz"><button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-v6ipcuxz"><svg aria-hidden="true" class="open-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-v6ipcuxz astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg></button></starlight-menu-button><script type="module">var e=class extends HTMLElement{btn=this.querySelector(`button`);constructor(){super(),this.btn.addEventListener(`click`,()=>this.toggleExpanded());let e=this.closest(`nav`);e&&e.addEventListener(`keyup`,e=>this.closeOnEscape(e)),matchMedia(`(min-width: 50em)`).addEventListener(`change`,()=>this.setExpanded(!1))}setExpanded(e){this.setAttribute(`aria-expanded`,String(e)),document.body.toggleAttribute(`data-mobile-menu-expanded`,e),document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}toggleExpanded(){this.setExpanded(this.getAttribute(`aria-expanded`)!==`true`)}closeOnEscape(e){e.code===`Escape`&&(this.setExpanded(!1),this.btn.focus())}};customElements.define(`starlight-menu-button`,e);</script><div id="starlight__sidebar" class="sidebar-pane astro-mcy6wt2x"><div class="sidebar-content sl-flex astro-mcy6wt2x"><sl-sidebar-state-persist data-hash="1el75l8" class="astro-wqf42o3a"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-ikqq2z2l"><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Start here</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Antares</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/covered-call/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What a covered call is</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/why-antares/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Why this exists</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/start/status/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Where this stands</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">How it works</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-lifecycle/" aria-current="page" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">One round, end to end</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/auction/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How the premium is discovered</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/settlement/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">How a round is settled</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/round-outcomes/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The four ways a round ends</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/mechanism/price-feed/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The price feed</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Depositors</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/depositing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Depositing</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/withdrawing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Getting your money out</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/depositor/what-you-give-up/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you give up</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Counterparties</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/what-you-are-buying/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What you are buying</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/bidding-and-payout/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Bidding, and getting paid</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/bidder/pricing/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Pricing it yourself</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Trust and risk</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/trust-model/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Who can do what to your funds</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/invariants/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">The properties that must always hold</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/risks/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Risks, stated plainly</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/trust/incidents/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">If something breaks</span></a></li></ul></details></li><li class="astro-ikqq2z2l"><details open class="astro-ikqq2z2l"><summary class="astro-ikqq2z2l"><span class="group-label astro-ikqq2z2l"><span class="large astro-ikqq2z2l">Reference</span></span><svg aria-hidden="true" class="caret astro-ikqq2z2l astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-ikqq2z2l"><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/deployment/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">What is deployed</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/contract-surface/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Contract surface</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/glossary/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Glossary</span></a></li><li class="astro-ikqq2z2l"><a href="/AntaresDocs/reference/security/" class="astro-ikqq2z2l"><span class="astro-ikqq2z2l">Reporting a vulnerability</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-rhmlmlok"><div class="social-icons astro-rhmlmlok"><a href="https://github.com/tamerrarda/Antares" rel="me" class="sl-flex astro-yigcaw23"><span class="sr-only astro-yigcaw23">GitHub</span><svg aria-hidden="true" class="astro-yigcaw23 astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-t5vao53u"><span class="sr-only astro-t5vao53u">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-t5vao53u"><option value="dark" class="astro-t5vao53u">Dark</option><option value="light" class="astro-t5vao53u">Light</option><option value="auto" selected class="astro-t5vao53u">Auto</option></select><svg aria-hidden="true" class="icon caret astro-t5vao53u astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></div></nav><div class="main-frame astro-mcy6wt2x"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-7bq7y7x2"><aside class="right-sidebar-container print:hidden astro-7bq7y7x2"><div class="right-sidebar astro-7bq7y7x2"><div class="lg:sl-hidden astro-nkmraz2k"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-hx74dxpp"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-hx74dxpp"><details id="starlight__mobile-toc" class="astro-hx74dxpp"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-hx74dxpp"><span class="toggle sl-flex astro-hx74dxpp">On this page<svg aria-hidden="true" class="caret astro-hx74dxpp astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-hx74dxpp"></span></summary><div class="dropdown astro-hx74dxpp"><ul class="isMobile astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-state-machine" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The state machine</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-clock-at-the-shipped-parameters" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The clock, at the shipped parameters</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#phase-by-phase" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Phase by phase</span></a><ul class="isMobile astro-rkh7svn2" style="--depth: 1;"><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#idle-between-rounds" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Idle: between rounds</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#open_epoch-permissionless-no-signature-at-all" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">open_epoch(): permissionless, no signature at all</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#auction-45-minutes" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Auction: 45 minutes</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#active-until-expiry" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Active: until expiry</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#close_round-permissionless-and-the-caller-does-not-choose-the-outcome" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">close_round(): permissionless, and the caller does not choose the outcome</span></a></li></ul></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#who-can-call-what" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Who can call what</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/AntaresDocs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-nkmraz2k"><div class="sl-container astro-nkmraz2k"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-rkh7svn2" style="--depth: 0;"><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#_top" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Overview</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-state-machine" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The state machine</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#the-clock-at-the-shipped-parameters" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">The clock, at the shipped parameters</span></a></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#phase-by-phase" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Phase by phase</span></a><ul class="astro-rkh7svn2" style="--depth: 1;"><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#idle-between-rounds" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Idle: between rounds</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#open_epoch-permissionless-no-signature-at-all" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">open_epoch(): permissionless, no signature at all</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#auction-45-minutes" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Auction: 45 minutes</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#active-until-expiry" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">Active: until expiry</span></a></li><li style="--depth: 1;" class="astro-rkh7svn2"><a href="#close_round-permissionless-and-the-caller-does-not-choose-the-outcome" style="--depth: 1;" class="astro-rkh7svn2"><span style="--depth: 1;" class="astro-rkh7svn2">close_round(): permissionless, and the caller does not choose the outcome</span></a></li></ul></li><li style="--depth: 0;" class="astro-rkh7svn2"><a href="#who-can-call-what" style="--depth: 0;" class="astro-rkh7svn2"><span style="--depth: 0;" class="astro-rkh7svn2">Who can call what</span></a></li></ul></nav></starlight-toc><script type="module" src="/AntaresDocs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-7bq7y7x2"><main data-pagefind-body class="astro-ddokiihg" lang="en" dir="ltr"><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><h1 id="_top" class="astro-2tzqtbsn">One round, end to end</h1><p class="antares-deck">Three phases, four ways out, and two calls that anyone at all can make.</p></div></div><div class="content-panel astro-hjzgb224"><div class="sl-container astro-hjzgb224"><div class="sl-markdown-content"><p>The vault has one round in flight at a time. This page is the canonical description of the cycle —
+every other page on this site defers to it.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="the-state-machine">The state machine</h2><a class="sl-anchor-link" href="#the-state-machine"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “The state machine”</span></a></div>
+<pre class="mermaid">stateDiagram-v2
+    direction LR
+    [*] --> Idle
+
+    Idle --> Auction: open_epoch() · permissionless&#x3C;br/>requires min_idle_gap elapsed
+    Auction --> Active: fills present at auction_end&#x3C;br/>(or sold out early)
+    Auction --> Lapsed: auction_end, nothing sold
+    Active --> Settled: close_round()&#x3C;br/>the feed answered for expiry
+    Active --> Voided: close_round()&#x3C;br/>feed was demonstrably dead at expiry&#x3C;br/>and the grace period has passed
+    Active --> Unresolved: close_round()&#x3C;br/>nobody closed it while&#x3C;br/>expiry was still readable
+
+    Settled --> Idle
+    Lapsed --> Idle
+    Voided --> Idle
+    Unresolved --> Idle</pre>
+<p>Four terminal outcomes, one shared exit: all of them finalize through the same internal path, so
+the withdrawal-queue accounting cannot diverge between them.
+<a href="/AntaresDocs/mechanism/round-outcomes/">The four ways a round ends</a> takes each one in turn.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="the-clock-at-the-shipped-parameters">The clock, at the shipped parameters</h2><a class="sl-anchor-link" href="#the-clock-at-the-shipped-parameters"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “The clock, at the shipped parameters”</span></a></div>
+<p>Times below are the deployed vault’s (<a href="/AntaresDocs/reference/deployment/#parameters"><code dir="auto">aXLM-E</code></a>).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Window</th><th>How long</th><th>What is possible</th></tr></thead><tbody><tr><td>Previous round finalized → a new round may open</td><td><strong>2 hours</strong> minimum (<code dir="auto">min_idle_gap</code>)</td><td>Deposits mint instantly; withdrawals pay instantly; pending deposits convert</td></tr><tr><td><code dir="auto">open_epoch()</code> → <code dir="auto">auction_end</code></td><td><strong>45 minutes</strong> (<code dir="auto">auction_duration</code>)</td><td>Bidding. The premium falls linearly from 280 bps to 55 bps of notional</td></tr><tr><td><code dir="auto">auction_end</code> → <code dir="auto">expiry</code></td><td>the rest of <strong>3 days</strong> (<code dir="auto">epoch_duration</code>, measured from the open)</td><td>Nothing to do. The option is live</td></tr><tr><td><code dir="auto">expiry</code> onwards</td><td>until somebody calls</td><td>Closing is open to anyone and pays a bounty</td></tr></tbody></table>
+<p>Past expiry there is a second clock, and it is the failure envelope rather than the normal path:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Moment</th><th>Parameter</th><th>What it means</th></tr></thead><tbody><tr><td><code dir="auto">expiry + 12 h</code></td><td><code dir="auto">oracle_dead_after</code></td><td>The earliest a demonstrably dead feed may annul the round</td></tr><tr><td><code dir="auto">expiry + 20 h 15 m</code></td><td>the feed’s reachable depth</td><td>Past this the expiry window can no longer be read by anyone</td></tr><tr><td><code dir="auto">expiry + 21 h</code></td><td><code dir="auto">unresolved_after</code></td><td>The round closes as unresolved <strong>without calling the price feed at all</strong></td></tr></tbody></table>
+<p>In the normal path a round is closed within minutes of expiry, because closing pays.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="phase-by-phase">Phase by phase</h2><a class="sl-anchor-link" href="#phase-by-phase"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Phase by phase”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="idle-between-rounds">Idle: between rounds</h3><a class="sl-anchor-link" href="#idle-between-rounds"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Idle: between rounds”</span></a></div>
+<p>No option is live. Deposits mint shares immediately at the current price, withdrawals burn shares
+and pay immediately, and a pending deposit from the previous round can be converted.</p>
+<p>A new round may open once <code dir="auto">min_idle_gap</code> has elapsed since the last finalization — two hours on the
+deployed vault. The gap scales with the round length — <code dir="auto">min_idle_gap ≥ epoch_duration ÷ 50</code> is
+enforced at construction <strong>and re-checked on every parameter change</strong>, so no later admin call can
+shrink it below that floor — because a fixed hour on a two-week round is not a window.</p>
+<p><strong>Anyone may end the idle window</strong> as soon as it reaches its minimum width. That is a real cost to
+a depositor timing an instant exit, and <a href="/AntaresDocs/depositor/withdrawing/">Getting your money out</a>
+explains the flag that protects against it.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="open_epoch-permissionless-no-signature-at-all"><code dir="auto">open_epoch()</code>: permissionless, no signature at all</h3><a class="sl-anchor-link" href="#open_epoch-permissionless-no-signature-at-all"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “open_epoch(): permissionless, no signature at all”</span></a></div>
+<div class="expressive-code"><link rel="stylesheet" href="/AntaresDocs/_astro/ec.w36nc.css"><script type="module" src="/AntaresDocs/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">open_epoch</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> bool;</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn open_epoch(env: Env) -> bool;"><div></div></button></div></figure></div>
+<p>It takes <strong>no authorization</strong> — no admin, no signature from any particular party. Anyone can call
+it. What it does:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">spot           = a guarded reading of the price feed, live</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">strike         = spot × 1.03                      (strike_bps_otm = 300)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">expiry         = now + 3 days                     (epoch_duration)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">auction_end    = now + 45 minutes                 (auction_duration)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">notional_offer = locked_assets                    (everything the vault holds for depositors)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="spot           = a guarded reading of the price feed, livestrike         = spot × 1.03                      (strike_bps_otm = 300)expiry         = now + 3 days                     (epoch_duration)auction_end    = now + 45 minutes                 (auction_duration)notional_offer = locked_assets                    (everything the vault holds for depositors)"><div></div></button></div></figure></div>
+<p>It reverts, and anyone may retry, if the feed is stale, if a short window disagrees with a longer
+one of the same moment by more than 1 %, if the gap has not elapsed, if the vault has never had a
+deposit, or if it holds less than the 100 XLM minimum fill. <strong>No round opens on a price that could
+not be read.</strong> <a href="/AntaresDocs/mechanism/price-feed/">The price feed</a> has the full list.</p>
+<p>It returns <code dir="auto">false</code> rather than reverting in one case worth knowing about: if the call first
+finalized a lapsed auction and <em>then</em> hit a failed precondition, the finalization is kept and the
+answer is <code dir="auto">false</code>. Reverting there would discard a round that had genuinely ended.</p>
+<p>Pause blocks <code dir="auto">open_epoch</code>. It is one of exactly three calls pause blocks, and all three are ways
+<em>in</em>.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="auction-45-minutes">Auction: 45 minutes</h3><a class="sl-anchor-link" href="#auction-45-minutes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Auction: 45 minutes”</span></a></div>
+<p>The premium starts high and falls linearly to a floor:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">premium_bps(t) = start_bps − ⌊(start_bps − floor_bps) × elapsed ÷ auction_duration⌋</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">               </span></span><span style="--0:#d6deeb;--1:#403f53">= 280 − ⌊225 × elapsed ÷ 2700⌋            on the deployed vault</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="premium_bps(t) = start_bps − ⌊(start_bps − floor_bps) × elapsed ÷ auction_duration⌋               = 280 − ⌊225 × elapsed ÷ 2700⌋            on the deployed vault"><div></div></button></div></figure></div>
+<p>Bids are signed by the bidder, partial fills are the expected case, and the offer flips to <code dir="auto">Active</code>
+the instant it sells out. <a href="/AntaresDocs/mechanism/auction/">How the premium is discovered</a> is the full page.</p>
+<p>If nothing sells by <code dir="auto">auction_end</code>, the round is <strong>lapsed</strong>: no premium, no payout, collateral never
+moved, share price unchanged. This resolves 45 minutes into the round rather than at the end of
+it, so an unsold round frees the collateral the same hour.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="active-until-expiry">Active: until expiry</h3><a class="sl-anchor-link" href="#active-until-expiry"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Active: until expiry”</span></a></div>
+<p>Nothing happens on chain and nothing needs to. The collateral is committed; the strike and the
+expiry are fixed; the bidders hold what they bought.</p>
+<p>Depositors can still queue an exit during this phase — the shares are burned immediately and the
+XLM is paid at whatever price the round closes at. Pending deposits stay fully cancellable
+throughout, because they were never locked.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="close_round-permissionless-and-the-caller-does-not-choose-the-outcome"><code dir="auto">close_round()</code>: permissionless, and the caller does not choose the outcome</h3><a class="sl-anchor-link" href="#close_round-permissionless-and-the-caller-does-not-choose-the-outcome"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “close_round(): permissionless, and the caller does not choose the outcome”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="rust"><code><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">fn</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">close_round</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#C5E478;--1:#3B61B0">env</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Env, </span><span style="--0:#C5E478;--1:#3B61B0">bounty_to</span><span style="--0:#7FDBCA;--1:#096E72">:</span><span style="--0:#D6DEEB;--1:#403F53"> Address) </span><span style="--0:#7FDBCA;--1:#096E72">-></span><span style="--0:#D6DEEB;--1:#403F53"> RoundOutcome;</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="fn close_round(env: Env, bounty_to: Address) -> RoundOutcome;"><div></div></button></div></figure></div>
+<p><strong>One entry point, no outcome argument.</strong> The contract reads the price feed as it stood <em>at
+expiry</em>, once, and dispatches on what it finds: the round settles if the feed answered, voids if
+the feed was demonstrably dead at expiry and the grace period has passed, and finalizes as
+unresolved if expiry has left the feed’s reachable history — or, past a validated bound, without
+calling the feed at all.</p>
+<p>Three separate entry points would let the caller name the result and would leave the exclusion
+between them as something a test hopes for. One dispatcher makes it structural. This is invariant
+<a href="/AntaresDocs/trust/invariants/#i10-closing-a-round-is-a-function-of-history">I10</a>.</p>
+<p>Whoever calls it names the address that receives the <strong>bounty</strong> — 25 bps of the round’s premium on
+the deployed vault, capped at 100 bps by the contract. The bounty exists so that closing never
+depends on someone being generous. It is paid when a round settles and when it finalizes
+unresolved; a voided round pays none, because a void refunds the premium in full and there is
+nothing to pay it from.</p>
+<p><code dir="auto">close_round</code> is <strong>not pausable</strong>, is O(1) on every branch, and never iterates bidders. A per-bidder
+loop would make the exit path’s cost grow with participation, which is a denial-of-service surface
+aimed at the one call that must never fail.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="who-can-call-what">Who can call what</h2><a class="sl-anchor-link" href="#who-can-call-what"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Who can call what”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Call</th><th>Who</th><th>Pausable</th></tr></thead><tbody><tr><td><code dir="auto">open_epoch</code></td><td>anyone, no signature</td><td><strong>yes</strong></td></tr><tr><td><code dir="auto">bid</code></td><td>anyone, signed by the bidder — narrowed by an expiring allowlist until 2026-09-07</td><td><strong>yes</strong></td></tr><tr><td><code dir="auto">deposit</code></td><td>the depositor</td><td><strong>yes</strong></td></tr><tr><td><code dir="auto">close_round</code></td><td>anyone, no signature</td><td>no</td></tr><tr><td><code dir="auto">request_withdraw</code> · <code dir="auto">claim_withdraw</code> · <code dir="auto">cancel_pending_deposit</code> · <code dir="auto">redeem_shares</code></td><td>the holder</td><td>no</td></tr><tr><td><code dir="auto">claim_payout</code> · <code dir="auto">claim_refund</code></td><td>the bidder</td><td>no</td></tr><tr><td><code dir="auto">claim_fee</code></td><td>the fee recipient</td><td>no</td></tr><tr><td><code dir="auto">restore_position</code></td><td>anyone, for anyone</td><td>no</td></tr><tr><td>every <code dir="auto">set_*</code>, <code dir="auto">upgrade</code>, <code dir="auto">migrate</code></td><td>admin only</td><td>n/a</td></tr></tbody></table>
+<p>The keeper is a bot that calls <code dir="auto">open_epoch</code> and <code dir="auto">close_round</code> on a timer. It holds one key, that
+key can call two calls anyone can call, and losing it costs the bounties and nothing else. <strong>It is
+a convenience, never an authority.</strong></p></div><footer class="sl-flex astro-l4t74iij"><div class="meta sl-flex astro-l4t74iij"></div><div class="pagination-links print:hidden astro-53soymxa" dir="ltr"><a href="/AntaresDocs/start/status/" rel="prev" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-53soymxa">Previous<br class="astro-53soymxa"><span class="link-title astro-53soymxa">Where this stands</span></span></a><a href="/AntaresDocs/mechanism/auction/" rel="next" class="astro-53soymxa"><svg aria-hidden="true" class="astro-53soymxa astro-la53egaz" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-53soymxa">Next<br class="astro-53soymxa"><span class="link-title astro-53soymxa">How the premium is discovered</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
