@@ -7,4 +7,4 @@ call vault on Stellar.
 the theme — lives in the main repository under `site/`, and this branch is written by a build rather
 than edited by hand. Open an issue there rather than here.
 
-Served at <https://tamerrarda.github.io/AntaresDocs/>.
+Served at <https://docsantares.vercel.app/>.
